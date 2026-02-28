@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
+import { errorHandler } from "./middlewares/error.middleware.js";
+import authRouter from "./routes/auth.route.js";
 
 const app = express();
 
@@ -30,5 +32,9 @@ app.use("/health", async (req, res) => {
     .status(200)
     .json({ success: true, message: "Application server is healthy" });
 });
+
+app.use("/api/v1/auth", authRouter);
+
+app.use(errorHandler);
 
 export default app;
